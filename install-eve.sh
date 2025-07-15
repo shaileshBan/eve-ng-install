@@ -56,8 +56,7 @@ apt install -y \
 mkdir -p /opt/eve-ng
 cd /opt/eve-ng
 
-echo "Downloading EVE-NG .deb packages..."
-wget https://www.eve-ng.net/repo/installer/install-eve-community.sh -O install-eve-community.sh
+echo "Downloading EVE-NG .deb packages..."wget https://raw.githubusercontent.com/shaileshBan/eve-ng-install/9f66c220859e873508f5526dfd430bd48a0c9d86/install-eve-community.sh -O install-eve-community.sh
 chmod +x install-eve-community.sh
 ./install-eve-community.sh
 

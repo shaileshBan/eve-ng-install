@@ -2,7 +2,7 @@
 
 # EVE-NG Azure Custom Installer
 # Author: shaileshBan
-# Tested on: Ubuntu 18.04 LTS
+# Tested on: Ubuntu 18.04 LTS (Azure VM)
 
 set -e
 
@@ -19,16 +19,16 @@ fi
 # Update system
 apt update && apt upgrade -y
 
-# Locale fix
+# Fix locale issues (Azure minimal image often has this)
 export DEBIAN_FRONTEND=noninteractive
 apt install -y locales
 locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8
 
-# Set hostname
+# Set hostname (optional)
 hostnamectl set-hostname eve-ng
 
-# Add i386 support
+# Add i386 architecture for legacy packages
 dpkg --add-architecture i386
 apt update
 
@@ -52,13 +52,14 @@ apt install -y \
   libxt6 libxmu6 \
   libpcap0.8
 
-# Download and run the official EVE-NG installer
+# Download and install EVE-NG core packages
 mkdir -p /opt/eve-ng
 cd /opt/eve-ng
+
 echo "Downloading EVE-NG .deb packages..."
-wget https://raw.githubusercontent.com/shaileshBan/eve-ng-install/3d58b664ee1696fe93f725bc231b241072810e02/install-eve.sh -O install-eve-ng.sh
-chmod +x install-eve-ng.sh
-./install-eve-ng.sh
+wget https://www.eve-ng.net/repo/installer/install-eve-community.sh -O install-eve-community.sh
+chmod +x install-eve-community.sh
+./install-eve-community.sh
 
 # Clean up
 apt autoremove -y

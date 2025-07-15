@@ -2,6 +2,7 @@
 
 # EVE-NG Azure Custom Installer
 # Author: shaileshBan
+# Tested on: Ubuntu 18.04 LTS
 
 set -e
 
@@ -9,14 +10,25 @@ echo "---------------------------"
 echo "EVE-NG Community Installer"
 echo "---------------------------"
 
-# Update and prepare system
+# Root Check
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root. Use sudo."
+   exit 1
+fi
+
+# Update system
 apt update && apt upgrade -y
+
+# Locale fix
 export DEBIAN_FRONTEND=noninteractive
 apt install -y locales
 locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8
 
-# Add architecture
+# Set hostname
+hostnamectl set-hostname eve-ng
+
+# Add i386 support
 dpkg --add-architecture i386
 apt update
 
@@ -33,18 +45,16 @@ apt install -y \
   linux-image-virtual \
   ca-certificates curl gnupg
 
-# Install EVE-NG dependencies
+# Install eve-ng dependencies
 apt install -y \
   lib32z1 lib32ncurses5 lib32stdc++6 \
   libguestfs-tools \
   libxt6 libxmu6 \
   libpcap0.8
 
-# Prepare directory
+# Download and run the official EVE-NG installer
 mkdir -p /opt/eve-ng
 cd /opt/eve-ng
-
-# Download and run installer
 echo "Downloading EVE-NG .deb packages..."
 wget https://raw.githubusercontent.com/shaileshBan/eve-ng-install/3d58b664ee1696fe93f725bc231b241072810e02/install-eve.sh -O install-eve-ng.sh
 chmod +x install-eve-ng.sh

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # EVE-NG Azure Custom Installer
 # Author: shaileshBan
 # Tested on: Ubuntu 18.04 LTS (Azure VM)
@@ -7,13 +6,13 @@
 set -e
 
 echo "---------------------------"
-echo "EVE-NG Community Installer"
+echo " EVE-NG Community Installer"
 echo "---------------------------"
 
 # Root Check
 if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root. Use sudo." 
-   exit 1
+  echo "This script must be run as root. Use sudo."
+  exit 1
 fi
 
 # Update system
@@ -52,19 +51,18 @@ apt install -y \
   libxt6 libxmu6 \
   libpcap0.8
 
-# Optional: Install GUI (Xfce)
+# Optional: Install GUI (Xfce + VNC)
 # apt install -y xfce4 xfce4-goodies tightvncserver
 
-# Download and install EVE-NG core packages
+# Download and install EVE-NG core packages (from your GitHub)
 mkdir -p /opt/eve-ng
 cd /opt/eve-ng
 
 echo "Downloading EVE-NG .deb packages..."
-wget http://www.eve-ng.net/repo/installer/install-eve-ng.sh -O install-eve-ng.sh
+wget https://raw.githubusercontent.com/shaileshBan/eve-ng-install/3d58b664ee1696fe93f725bc231b241072810e02/install-eve.sh -O install-eve-ng.sh
 chmod +x install-eve-ng.sh
 ./install-eve-ng.sh
 
 # Clean up
 apt autoremove -y
 echo "Installation complete. Reboot your VM."
-

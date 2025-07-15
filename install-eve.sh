@@ -57,8 +57,8 @@ mkdir -p /opt/eve-ng
 cd /opt/eve-ng
 echo "Downloading EVE-NG .deb packages..."
 wget https://raw.githubusercontent.com/shaileshBan/eve-ng-install/3d58b664ee1696fe93f725bc231b241072810e02/install-eve.sh -O install-eve-ng.sh
-chmod +x custom-eve-ng.sh
-./custom-eve-ng.sh
+chmod +x install-eve-ng.sh
+./install-eve-ng.sh
 
 # Clean up
 apt autoremove -y
